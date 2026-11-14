@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f4eee4;
+  --color-paper-2: #ebe3d6;
+  --color-ink: #1b1815;
+  --color-ink-2: #4a433c;
+  --color-muted: #7a7066;
+  --color-line: #d9cfc0;
+  --color-curry: #c2621f;
+  --color-curry-dark: #9a4a12;
+  --color-seal: #b42a1f;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-jp: var(--font-shippori), "Hiragino Mincho ProN", serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-curry);
+    color: var(--color-paper);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-curry);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-primary:hover {
+    background: var(--color-curry-dark);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-ink);
+    color: var(--color-ink);
+  }
+  .btn-ghost:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-curry-dark);
+  }
+  .field {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-line);
+    background: #fffdf9;
+    color: var(--color-ink);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-curry);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-curry) 22%, transparent);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--color-seal);
+  }
+}
+
+/* Content is always visible by default. Where the browser supports scroll-driven
+   animations and the visitor allows motion, sections fade in as they enter. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
